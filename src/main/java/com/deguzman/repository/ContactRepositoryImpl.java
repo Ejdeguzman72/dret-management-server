@@ -162,7 +162,7 @@ public class ContactRepositoryImpl implements ContactRepository {
 	}
 
 	@Override
-	public long deleteContactById(int contactId) {
+	public int deleteContactById(long contactId) {
 		int result = 0;
 		
 		if (contactId != 0) {
@@ -171,5 +171,13 @@ public class ContactRepositoryImpl implements ContactRepository {
 		}
 		
 		return result;
+	}
+
+	@Override
+	public Contact searchContactById(long contactIdl) {
+		Contact contact = new Contact();
+		contact = jdbcTemplate.queryForObject(GET_CONTACT_BY_ID_SQL, BeanPropertyRowMapper.newInstance(Contact.class), contactIdl);
+		
+		return contact;
 	}
 }

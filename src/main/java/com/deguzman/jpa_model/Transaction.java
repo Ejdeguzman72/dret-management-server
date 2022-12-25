@@ -1,43 +1,64 @@
-package com.deguzman.domain;
+package com.deguzman.jpa_model;
 
-import java.time.LocalDate;
+import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import javax.persistence.Entity;
+
+@Entity
+@Table(name = "transaction")
 public class Transaction {
 
 	private long transactionId;
 	private long propertyId;
 	private int transactionTypeId;
 	private double amount;
-	private LocalDate settlementDate;
+	private Date settlementDate;
 	
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Id
+	@Column(name = "transaction_id")
 	public long getTransactionId() {
 		return transactionId;
 	}
 	public void setTransactionId(long transactionId) {
 		this.transactionId = transactionId;
 	}
+	
+	@Column(name = "property_id")
 	public long getPropertyId() {
 		return propertyId;
 	}
 	public void setPropertyId(long propertyId) {
 		this.propertyId = propertyId;
 	}
+	
+	@Column(name = "transaction_type_id")
 	public int getTransactionTypeId() {
 		return transactionTypeId;
 	}
 	public void setTransactionTypeId(int transactionTypeId) {
 		this.transactionTypeId = transactionTypeId;
 	}
+	
+	@Column(name = "amount")
 	public double getAmount() {
 		return amount;
 	}
 	public void setAmount(double amount) {
 		this.amount = amount;
 	}
-	public LocalDate getSettlementDate() {
+	
+	@Column(name = "settlement_date")
+	public Date getSettlementDate() {
 		return settlementDate;
 	}
-	public void setSettlementDate(LocalDate settlementDate) {
+	public void setSettlementDate(Date settlementDate) {
 		this.settlementDate = settlementDate;
 	}
 	@Override
@@ -82,7 +103,7 @@ public class Transaction {
 		return "Transaction [transactionId=" + transactionId + ", propertyId=" + propertyId + ", transactionTypeId="
 				+ transactionTypeId + ", amount=" + amount + ", settlementDate=" + settlementDate + "]";
 	}
-	public Transaction(long transactionId, long propertyId, int transactionTypeId, double amount, LocalDate settlementDate) {
+	public Transaction(long transactionId, long propertyId, int transactionTypeId, double amount, Date settlementDate) {
 		super();
 		this.transactionId = transactionId;
 		this.propertyId = propertyId;
@@ -94,5 +115,4 @@ public class Transaction {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	
 }

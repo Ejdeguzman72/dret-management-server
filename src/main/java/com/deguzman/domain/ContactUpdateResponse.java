@@ -3,7 +3,7 @@ package com.deguzman.domain;
 public class ContactUpdateResponse {
 
 	public Contact contact;
-	public Integer updatedCount;
+	public Integer updatedRecords;
 	public String message;
 	public String statusCode;
 	public String description;
@@ -16,12 +16,12 @@ public class ContactUpdateResponse {
 		this.contact = contact;
 	}
 
-	public Integer getUpdatedCount() {
-		return updatedCount;
+	public Integer getUpdatedReocrds() {
+		return updatedRecords;
 	}
 
-	public void setUpdatedCount(Integer updatedCount) {
-		this.updatedCount = updatedCount;
+	public void setUpdatedReocrds(Integer updatedRecords) {
+		this.updatedRecords = updatedRecords;
 	}
 
 	public String getMessage() {

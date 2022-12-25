@@ -2,14 +2,14 @@ package com.deguzman.domain;
 
 public class ContactDeleteRequest {
 
-	public int personId;
+	public long contactId;
 
-	public int getPersonId() {
-		return personId;
+	public long getContactId() {
+		return contactId;
 	}
 
-	public void setPersonId(int personId) {
-		this.personId = personId;
+	public void setContactId(long contactId) {
+		this.contactId = contactId;
 	}
-	
+
 }

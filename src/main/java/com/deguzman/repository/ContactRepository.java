@@ -12,10 +12,12 @@ public interface ContactRepository {
 	
 	public List<Contact> findContactByName(String firstname, String lastname);
 	
+	public Contact searchContactById(long contactId);
+	
 	public int addContactInformation(Contact contact);
 	
 	public int updateContactInformation(Contact contact, int contactId);
 	
-	public long deleteContactById(int contactId);
+	public int deleteContactById(long contactId);
 	
 }

@@ -2,18 +2,20 @@ package com.deguzman.domain;
 
 import java.util.List;
 
+import com.deguzman.dto.TransactionDTO;
+
 public class TrxListResponse {
 
-	public List<Transaction> list;
+	public List<TransactionDTO> list;
 	public int count;
 	public String message;
 	public String statusCode;
 	public String description;
 	
-	public List<Transaction> getList() {
+	public List<TransactionDTO> getList() {
 		return list;
 	}
-	public void setList(List<Transaction> list) {
+	public void setList(List<TransactionDTO> list) {
 		this.list = list;
 	}
 	public int getCount() {
