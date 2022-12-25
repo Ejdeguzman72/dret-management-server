@@ -13,6 +13,20 @@ public class TransactionDTO {
 	private String trxDescr;
 	private double amount;
 	private LocalDate settlementDate;
+	
+	public TransactionDTO(long transactionId, String address01, String address02, String city, String state, String zip,
+			String trxDescr, double amount, LocalDate settlementDate) {
+		this.transactionId = transactionId;
+		this.address01 = address01;
+		this.address02 = address02;
+		this.city = city;
+		this.state = state;
+		this.city = city;
+		this.trxDescr = trxDescr;
+		this.amount = amount;
+		this.settlementDate = settlementDate;
+	}
+	
 	public long getTransactionId() {
 		return transactionId;
 	}
