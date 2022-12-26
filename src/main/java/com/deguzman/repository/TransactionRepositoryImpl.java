@@ -34,6 +34,15 @@ public class TransactionRepositoryImpl implements TransactionRepository {
 			+ "WHERE T.TRANSACTION_TYPE_ID = TT.TRANSACTION_TYPE_ID "
 			+ "AND T.PROPERTY_ID = P.PROPERTY_ID";
 	
+	String SEARCH_TRANSACTION_BY_ID_SQL = "SELECT TRANSACTION_ID, "
+			+ "PROPERTY_ID, "
+			+ "TRANSACTION_TYPE_ID, "
+			+ "AMOUNT, "
+			+ "SETTLEMENT_DATE, "
+			+ "VERIFIED "
+			+ "FROM TRANSACTION "
+			+ "WHERE TRANSACTION_ID = ?";
+	
 	String GET_ALL_TRANSACTIONS_BY_TYPE_SQL = "SELECT TRANSACTION_ID, "
 			+ "ADDRESS01, "
 			+ "ADDRESS02, "
@@ -132,8 +141,35 @@ public class TransactionRepositoryImpl implements TransactionRepository {
 
 	@Override
 	public int updateTransactionInformation(long transactionId, Transaction transactionDetails) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = 0; 
+		
+		Transaction transaction = jdbcTemplate.queryForObject(SEARCH_TRANSACTION_BY_ID_SQL, BeanPropertyRowMapper.newInstance(Transaction.class));
+		
+		if (transaction != null) {
+			transaction.setAmount(transactionDetails.getAmount());
+			transaction.setPropertyId(transactionDetails.getPropertyId());
+			transaction.setSettlementDate(transactionDetails.getSettlementDate());
+			transaction.setTransactionTypeId(transactionDetails.getTransactionTypeId());
+			transaction.setVerified(transactionDetails.isVerified());
+			
+			
+			result = jdbcTemplate.update(UPDATE_TRANSACTION_INFORMATION_SQL, new Object[] {
+					transaction.getAmount(),
+					transaction.getPropertyId(),
+					transaction.getSettlementDate(),
+					transaction.getTransactionTypeId(),
+					transaction.isVerified()
+			});
+		}
+		
+		LOGGER.info("Updating transaction information...");
+		
+		return result;
 	}
-
+	
+	public Transaction searchTransactionById(long transactionId) {
+		Transaction transaction = jdbcTemplate.queryForObject(SEARCH_TRANSACTION_BY_ID_SQL, BeanPropertyRowMapper.newInstance(Transaction.class));
+		
+		return transaction;
+	}
 }

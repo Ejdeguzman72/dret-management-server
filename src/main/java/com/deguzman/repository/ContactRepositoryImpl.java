@@ -16,8 +16,6 @@ public class ContactRepositoryImpl implements ContactRepository {
 
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
-	
-	private static final Logger LOGGER = LoggerFactory.getLogger(ContactRepositoryImpl.class);
 
 	String GET_ALL_CONTACT_INFORMATION = "SELECT CONTACT_ID"
 			+ "CONTACT_TYPE_ID "
@@ -67,6 +65,8 @@ public class ContactRepositoryImpl implements ContactRepository {
 			+ "WHERE CONTACT_ID = ?";
 	
 	String DELETE_CONTACT_INFORMATION_SQL = "DELETE FROM CONTACT WHERE CONTACT_ID = ?";
+	
+	private static final Logger LOGGER = LoggerFactory.getLogger(ContactRepositoryImpl.class);
 	
 	@Override
 	public List<Contact> findAllContacts() {
