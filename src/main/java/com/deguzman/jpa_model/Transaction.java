@@ -6,19 +6,23 @@ import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 
 @Entity
 @Table(name = "transaction")
 public class Transaction {
 
 	private long transactionId;
-	private long propertyId;
-	private int transactionTypeId;
 	private double amount;
 	private Date settlementDate;
+	
+	public TransactionType transactionType;
+	public Property property;
 	
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Id
@@ -30,28 +34,31 @@ public class Transaction {
 		this.transactionId = transactionId;
 	}
 	
-	@Column(name = "property_id")
-	public long getPropertyId() {
-		return propertyId;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "property_id")
+	public Property getProperty() {
+		return property;
 	}
-	public void setPropertyId(long propertyId) {
-		this.propertyId = propertyId;
+	public void setProperty(Property property) {
+		this.property = property;
 	}
 	
-	@Column(name = "transaction_type_id")
-	public int getTransactionTypeId() {
-		return transactionTypeId;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "transaction_type_id")
+	public TransactionType getTransactionType() {
+		return transactionType;
 	}
-	public void setTransactionTypeId(int transactionTypeId) {
-		this.transactionTypeId = transactionTypeId;
+	
+	public void setTransactionType(TransactionType transactionType) {
+		this.transactionType = transactionType;
+	}
+	public void setAmount(double amount) {
+		this.amount = amount;
 	}
 	
 	@Column(name = "amount")
 	public double getAmount() {
 		return amount;
-	}
-	public void setAmount(double amount) {
-		this.amount = amount;
 	}
 	
 	@Column(name = "settlement_date")
@@ -61,58 +68,5 @@ public class Transaction {
 	public void setSettlementDate(Date settlementDate) {
 		this.settlementDate = settlementDate;
 	}
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		long temp;
-		temp = Double.doubleToLongBits(amount);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
-		result = prime * result + (int) (propertyId ^ (propertyId >>> 32));
-		result = prime * result + ((settlementDate == null) ? 0 : settlementDate.hashCode());
-		result = prime * result + (int) (transactionId ^ (transactionId >>> 32));
-		result = prime * result + transactionTypeId;
-		return result;
-	}
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Transaction other = (Transaction) obj;
-		if (Double.doubleToLongBits(amount) != Double.doubleToLongBits(other.amount))
-			return false;
-		if (propertyId != other.propertyId)
-			return false;
-		if (settlementDate == null) {
-			if (other.settlementDate != null)
-				return false;
-		} else if (!settlementDate.equals(other.settlementDate))
-			return false;
-		if (transactionId != other.transactionId)
-			return false;
-		if (transactionTypeId != other.transactionTypeId)
-			return false;
-		return true;
-	}
-	@Override
-	public String toString() {
-		return "Transaction [transactionId=" + transactionId + ", propertyId=" + propertyId + ", transactionTypeId="
-				+ transactionTypeId + ", amount=" + amount + ", settlementDate=" + settlementDate + "]";
-	}
-	public Transaction(long transactionId, long propertyId, int transactionTypeId, double amount, Date settlementDate) {
-		super();
-		this.transactionId = transactionId;
-		this.propertyId = propertyId;
-		this.transactionTypeId = transactionTypeId;
-		this.amount = amount;
-		this.settlementDate = settlementDate;
-	}
-	public Transaction() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
+	
 }

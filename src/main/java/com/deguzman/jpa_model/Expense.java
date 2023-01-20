@@ -4,9 +4,12 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -18,9 +21,10 @@ public class Expense {
 
 	private long expenseId;
 	private double amount;
-	private int expenseTypeId;
 	private Date incurredDate;
 	private Date paymentDate;
+	
+	public ExpenseType expenseType;
 	
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Id
@@ -40,14 +44,14 @@ public class Expense {
 		this.amount = amount;
 	}
 	
-	@Column(name = "expense_type_id")
-	public int getExpenseTypeId() {
-		return expenseTypeId;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "expense_type_id")
+	public ExpenseType getExpenseType() {
+		return expenseType;
 	}
-	public void setExpenseTypeId(int expenseTypeId) {
-		this.expenseTypeId = expenseTypeId;
+	public void setExpenseType(ExpenseType expenseType) {
+		this.expenseType = expenseType;
 	}
-	
 	@Column(name = "incurred_date")
 	public Date getIncurredDate() {
 		return incurredDate;
@@ -62,62 +66,5 @@ public class Expense {
 	}
 	public void setPaymentDate(Date paymentDate) {
 		this.paymentDate = paymentDate;
-	}
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		long temp;
-		temp = Double.doubleToLongBits(amount);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
-		result = prime * result + (int) (expenseId ^ (expenseId >>> 32));
-		result = prime * result + expenseTypeId;
-		result = prime * result + ((incurredDate == null) ? 0 : incurredDate.hashCode());
-		result = prime * result + ((paymentDate == null) ? 0 : paymentDate.hashCode());
-		return result;
-	}
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Expense other = (Expense) obj;
-		if (Double.doubleToLongBits(amount) != Double.doubleToLongBits(other.amount))
-			return false;
-		if (expenseId != other.expenseId)
-			return false;
-		if (expenseTypeId != other.expenseTypeId)
-			return false;
-		if (incurredDate == null) {
-			if (other.incurredDate != null)
-				return false;
-		} else if (!incurredDate.equals(other.incurredDate))
-			return false;
-		if (paymentDate == null) {
-			if (other.paymentDate != null)
-				return false;
-		} else if (!paymentDate.equals(other.paymentDate))
-			return false;
-		return true;
-	}
-	@Override
-	public String toString() {
-		return "Expense [expenseId=" + expenseId + ", amount=" + amount + ", expenseTypeId=" + expenseTypeId
-				+ ", incurredDate=" + incurredDate + ", paymentDate=" + paymentDate + "]";
-	}
-	public Expense(long expenseId, double amount, int expenseTypeId, Date incurredDate, Date paymentDate) {
-		super();
-		this.expenseId = expenseId;
-		this.amount = amount;
-		this.expenseTypeId = expenseTypeId;
-		this.incurredDate = incurredDate;
-		this.paymentDate = paymentDate;
-	}
-	public Expense() {
-		super();
-		// TODO Auto-generated constructor stub
 	}
 }

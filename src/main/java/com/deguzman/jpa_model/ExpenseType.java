@@ -10,7 +10,7 @@ import javax.persistence.Table;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 @Entity
-@Table(name = "entity")
+@Table(name = "expense_type")
 @CrossOrigin
 public class ExpenseType {
 
